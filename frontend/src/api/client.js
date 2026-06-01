@@ -1,12 +1,13 @@
 export async function apiRequest(path, options = {}) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
   const url = baseUrl && path.startsWith("/") ? `${baseUrl}${path}` : path;
+  const headers = { ...(options.headers || {}) };
+  if (options.body != null && !("Content-Type" in headers) && !(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
 
   const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {})
-    },
+    headers,
     ...options
   });
 
