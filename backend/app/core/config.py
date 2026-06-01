@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     app_name: str = "Inventory & Order Management API"
     environment: str = "development"
 
-    database_url: str
+    database_url: str | None = None
     cors_origins: str = "*"
     auto_create_tables: bool = True
     low_stock_threshold: int = 5
